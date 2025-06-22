@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  php:
+    image: php:8.2-apache
+    container_name: php-app
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    command: >
+      bash -c "apt-get update && apt-get install -y libzip-dev zip unzip && \
+      docker-php-ext-install pdo pdo_mysql && \
+      a2enmod rewrite && \
+      sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf && \
+      apache2-foreground"
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: abc
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: abc
+
+volumes:
+  mysql-data:

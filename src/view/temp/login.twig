@@ -1,0 +1,23 @@
+{% extends "base_template.twig" %}
+{% block content %}
+    <div>
+        <form action="/submit-login" method="post">
+            <input type="hidden" name="token" value="{{ token }}"> <!--CSRF Token-->
+            <div style="margin-bottom: 20px">
+                <label>Email Address:
+                    <input type="email" name="email" required>
+                </label>
+            </div>
+
+            <div style="margin-bottom: 20px">
+                <label>Password:
+                    <input type="password" name="password" required>
+                </label>
+            </div>
+
+            <div style="margin-bottom: 20px">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

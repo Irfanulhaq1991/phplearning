@@ -1,0 +1,22 @@
+{
+    "name": "irfan/phplearning",
+    "description": "exploring php, mvc,...",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Irfan\\Phplearning\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Irfan"
+        }
+    ],
+    "require": {
+        "php-di/php-di": "^7.0",
+        "twig/twig": "^3.21",
+        "doctrine/orm": "^3.4",
+        "symfony/cache": "^7.3"
+    }
+}

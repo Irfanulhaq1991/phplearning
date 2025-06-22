@@ -1,0 +1,42 @@
+{% extends "base_template.twig" %}
+{% block content %}
+    <div>
+        <form action="/submit-registration" method="post">
+            <input type="hidden" name="token" value="{{ token }}"> <!--CSRF Token-->
+
+            <div style="margin-bottom: 20px">
+                <label> First Name:
+                    <input type="text" name="first_name">
+                </label>
+            </div>
+
+            <div style="margin-bottom: 20px">
+                <label>Last Name:
+                    <input type="text" name="last_name">
+                </label>
+            </div>
+
+            <div style="margin-bottom: 20px">
+                <label>Email Address:
+                    <input type="email" name="email" required>
+                </label>
+            </div>
+
+            <div style="margin-bottom: 20px">
+                <label>Password:
+                    <input type="password" name="password" required>
+                </label>
+            </div>
+
+            <div style="margin-bottom: 20px">
+                <label>Confirm Password:
+                    <input type="password" name="confirm_password" required>
+                </label>
+            </div>
+
+            <div style="margin-bottom: 20px">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

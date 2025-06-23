@@ -45,7 +45,17 @@ class RegistrationController extends BaseController
 
         if ($isCsrfTokenValid) {
 
-            $isSuccess = $this->userRepo->saveUser($userInfo);
+            $firstName = $userInfo["first_name"];
+            $lastName = $userInfo["lastName_name"];
+            $email = $userInfo["email"];
+            $password = $userInfo["password"];
+
+            $user = new User();
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
+            $user->setEmail($email);
+            $user->setPassword($password);
+            $isSuccess = $this->userRepo->saveUser($user);
             if ($isSuccess) {
                 header('Location: /login');
                 exit();

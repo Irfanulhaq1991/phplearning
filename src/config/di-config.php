@@ -9,6 +9,7 @@ use Irfan\Phplearning\model\UserRepo;
 use Irfan\Phplearning\routing\FlightRouter;
 use Irfan\Phplearning\routing\RouterContract;
 use Irfan\Phplearning\routing\RouterManager;
+use Irfan\Phplearning\view\RegistrationPresenter;
 use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -24,6 +25,7 @@ return [
     LoginController::class => autowire(),
     RouterContract::class => autowire(FlightRouter::class),
     RouterManager::class => autowire(),
+    RegistrationPresenter::class=>autowire(),
     EntityManagerInterface::class => function () {
         return require __DIR__ . '/db-config.php';
     },

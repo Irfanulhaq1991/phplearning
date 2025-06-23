@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use http\Exception\UnexpectedValueException;
 use Irfan\Phplearning\model\User;
 use Irfan\Phplearning\model\UserRepo;
+use Irfan\Phplearning\view\RegistrationPresenter;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -15,6 +16,7 @@ use Twig\Loader\FilesystemLoader;
 class RegistrationController
 {
     public function __construct(
+       private readonly RegistrationPresenter   $registrationView,
         private readonly Environment            $twig,
         private readonly EntityManagerInterface $entityManager,
 
@@ -34,7 +36,8 @@ class RegistrationController
     {
         $token = bin2hex(random_bytes(32));
         $_SESSION["csrf_token"] = $token;
-        $this->twig->display("registration.twig", ["token" => $token]);
+        $this->registrationView->render($token);
+/*        $this->twig->display("registration.twig", ["token" => $token]);*/
     }
 
     public function register(array $formData): void

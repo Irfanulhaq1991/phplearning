@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use http\Exception\UnexpectedValueException;
 use Irfan\Phplearning\model\User;
 use Irfan\Phplearning\model\UserRepo;
+use Irfan\Phplearning\view\RegistrationPresenter;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -15,8 +16,8 @@ use Twig\Loader\FilesystemLoader;
 class LoginController
 {
     public function __construct(
-        private readonly Environment $twig,
-        private readonly UserRepo $userRepo,
+        private readonly Environment      $twig,
+        private readonly UserRepo         $userRepo,
     )
     {
         if (session_status() === PHP_SESSION_NONE) {

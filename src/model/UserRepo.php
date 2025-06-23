@@ -7,15 +7,7 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepo extends EntityRepository
 {
-    /**
-     * @noinspection PhpIncompatibleReturnTypeInspection
-     * @param EntityManagerInterface $entityManager
-     * @return UserRepo
-     */
-    public static function instantiate(EntityManagerInterface $entityManager): UserRepo
-    {
-        return $entityManager->getRepository(User::class);
-    }
+
     public function saveUser(User $user):bool
     {
         $this->getEntityManager()->persist($user);

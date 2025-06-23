@@ -16,7 +16,7 @@ class LoginController
 {
     public function __construct(
         private readonly Environment $twig,
-        private readonly EntityManagerInterface $entityManager,
+        private readonly UserRepo $userRepo,
     )
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -42,8 +42,7 @@ class LoginController
             echo $formData["token"];
             $email = htmlspecialchars($formData["email"]??'');
             $password = htmlspecialchars($formData["password"]??'');
-            $repo = UserRepo::instantiate($this->entityManager);
-            $user = $repo->getUserByEmail($email);
+            $user = $this->userRepo->getUserByEmail($email);
             if($user && $user->comparePassword($password)){
                 echo "Login is successful";
             }else{

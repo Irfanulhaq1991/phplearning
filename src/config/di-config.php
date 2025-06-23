@@ -4,9 +4,12 @@
 use Doctrine\ORM\EntityManagerInterface;
 use Irfan\Phplearning\controller\LoginController;
 use Irfan\Phplearning\controller\RegistrationController;
+use Irfan\Phplearning\model\User;
+use Irfan\Phplearning\model\UserRepo;
 use Irfan\Phplearning\routing\FlightRouter;
 use Irfan\Phplearning\routing\RouterContract;
 use Irfan\Phplearning\routing\RouterManager;
+use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use function DI\autowire;
@@ -23,5 +26,9 @@ return [
     RouterManager::class => autowire(),
     EntityManagerInterface::class => function () {
         return require __DIR__ . '/db-config.php';
-    }
+    },
+    UserRepo::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManagerInterface::class);
+        return $em->getRepository(User::class);
+    },
 ];

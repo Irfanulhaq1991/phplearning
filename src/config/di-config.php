@@ -1,7 +1,11 @@
 <?php
 
 
+use DI\ContainerBuilder;
+use DI\DependencyException;
+use DI\NotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
+use Irfan\Phplearning\App;
 use Irfan\Phplearning\controller\LoginController;
 use Irfan\Phplearning\controller\RegistrationController;
 use Irfan\Phplearning\model\User;
@@ -22,13 +26,13 @@ use function DI\create;
 use function DI\get;
 
 
-return [
+$diGrape =  [
     FilesystemLoader::class => create()->constructor(__DIR__ . '/../view/temp/'),
     Environment::class => create()->constructor(get(FilesystemLoader::class)),
     RegistrationController::class => autowire(),
     LoginController::class => autowire(),
     RouterContract::class => autowire(FlightRouter::class),
-    RouterManager::class => autowire(),
+    App::class=>autowire(),
     RegistrationPresenter::class=>autowire(),
     LoginPresenter::class=>autowire(),
     SessionManagerContract::class=>autowire(SessionManager::class),
@@ -41,3 +45,14 @@ return [
         return $em->getRepository(User::class);
     },
 ];
+
+
+
+try {
+    $builder = new ContainerBuilder();
+    $builder->addDefinitions($diGrape);
+    $container = $builder->build();
+    return $container->get(App::class);
+} catch (Exception $e) {
+    return null;
+}

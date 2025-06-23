@@ -6,12 +6,12 @@ use Flight;
 use Irfan\Phplearning\controller\LoginController;
 use Irfan\Phplearning\controller\RegistrationController;
 
-class FlightRouter implements RouterContract
+readonly class FlightRouter implements RouterContract
 {
 
     public function __construct(
-        private readonly RegistrationController $registrationController,
-        private readonly LoginController $loginController,
+        private RegistrationController $registrationController,
+        private LoginController        $loginController,
     )
     {}
 

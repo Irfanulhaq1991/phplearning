@@ -7,7 +7,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class RegistrationPresenter
+class LoginPresenter
 {
     public function __construct(private readonly Environment $twig)
     {}
@@ -19,7 +19,7 @@ class RegistrationPresenter
      */
     public function render(string $token): void
     {
-        $this->twig->display("registration.twig", ["token" => $token]);
+        $this->twig->display("login.twig", ["token" => $token]);
     }
 
 

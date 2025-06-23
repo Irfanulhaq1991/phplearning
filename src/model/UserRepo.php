@@ -18,7 +18,7 @@ class UserRepo extends EntityRepository
     public function getUserByEmail(string $email): ?User
     {
         return $this->findOneBy([
-            "email" => @$email
+            "email" => $email
         ]);
     }
 }

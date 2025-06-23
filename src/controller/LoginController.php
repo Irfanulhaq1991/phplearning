@@ -2,7 +2,10 @@
 
 namespace Irfan\Phplearning\controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use http\Exception\UnexpectedValueException;
+use Irfan\Phplearning\model\User;
+use Irfan\Phplearning\model\UserRepo;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -11,7 +14,10 @@ use Twig\Loader\FilesystemLoader;
 
 class LoginController
 {
-    public function __construct(private readonly Environment $twig)
+    public function __construct(
+        private readonly Environment $twig,
+        private readonly EntityManagerInterface $entityManager,
+    )
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -32,10 +38,24 @@ class LoginController
 
     public function login(array $formData): void
     {
-        if($formData["token"] == $_SESSION["csrf_token"])
+        if($formData["token"] == $_SESSION["csrf_token"]) {
             echo $formData["token"];
-        echo $formData["email"];
-        echo $formData["password"];
+            $email = htmlspecialchars($formData["email"]??'');
+            $password = htmlspecialchars($formData["password"]??'');
+            $repo = UserRepo::instantiate($this->entityManager);
+            $user = $repo->getUserByEmail($email);
+            if($user && $user->comparePassword($password)){
+                echo "Login is successful";
+            }else{
+                echo "Login is unsuccessful";
+            }
+        }
+
+    }
+
+    public function logout()
+    {
+
 
     }
 }

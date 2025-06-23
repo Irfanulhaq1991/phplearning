@@ -17,6 +17,8 @@
         "php-di/php-di": "^7.0",
         "twig/twig": "^3.21",
         "doctrine/orm": "^3.4",
-        "symfony/cache": "^7.3"
+        "symfony/cache": "^7.3",
+        "mikecao/flight": "^3.15",
+        "doctrine/dbal": "^4.2"
     }
 }

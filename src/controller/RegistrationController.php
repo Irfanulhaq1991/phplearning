@@ -2,23 +2,63 @@
 
 namespace Irfan\Phplearning\controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use http\Exception\UnexpectedValueException;
+use Irfan\Phplearning\model\User;
+use Irfan\Phplearning\model\UserRepo;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-class RegisterationController
+class RegistrationController
 {
+    public function __construct(
+        private readonly Environment            $twig,
+        private readonly EntityManagerInterface $entityManager,
 
-    private Environment $twig;
-
-    public function __construct()
+    )
     {
-        $loader = new FilesystemLoader(__DIR__ . '/../view');
-        $this->twig = new Environment($loader);
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
-   public function renderRegisterUI()
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function render(): void
     {
-        $this->twig->display("registration.twig");
+        $token = bin2hex(random_bytes(32));
+        $_SESSION["csrf_token"] = $token;
+        $this->twig->display("registration.twig", ["token" => $token]);
+    }
+
+    public function register(array $formData): void
+    {
+        if ($formData["token"] == $_SESSION["csrf_token"]) {
+            $firstName = htmlspecialchars($formData["first_name"] ?? '');
+            $lastName = htmlspecialchars($formData["lastName_name"] ?? '');
+            $email = htmlspecialchars($formData["email"] ?? '');
+            $password = htmlspecialchars($formData["password"] ?? '');
+            $user = new User();
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
+            $user->setEmail($email);
+            $user->setPassword($password);
+            $repo = UserRepo::instantiate($this->entityManager);
+            $isSuccess = $repo->saveUser($user);
+            if ($isSuccess) {
+                header('Location: /login');
+                exit();
+            } else {
+                echo "Not able to register";
+            }
+        } else {
+            echo "error occured";
+        }
     }
 }

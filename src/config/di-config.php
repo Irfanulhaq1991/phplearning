@@ -9,6 +9,9 @@ use Irfan\Phplearning\model\UserRepo;
 use Irfan\Phplearning\routing\FlightRouter;
 use Irfan\Phplearning\routing\RouterContract;
 use Irfan\Phplearning\routing\RouterManager;
+use Irfan\Phplearning\utilities\SecurityUtility;
+use Irfan\Phplearning\utilities\SessionManager;
+use Irfan\Phplearning\utilities\SessionManagerContract;
 use Irfan\Phplearning\view\LoginPresenter;
 use Irfan\Phplearning\view\RegistrationPresenter;
 use Psr\Container\ContainerInterface;
@@ -28,6 +31,8 @@ return [
     RouterManager::class => autowire(),
     RegistrationPresenter::class=>autowire(),
     LoginPresenter::class=>autowire(),
+    SessionManagerContract::class=>autowire(SessionManager::class),
+    SecurityUtility::class=>autowire(),
     EntityManagerInterface::class => function () {
         return require __DIR__ . '/db-config.php';
     },

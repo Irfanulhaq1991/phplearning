@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use http\Exception\UnexpectedValueException;
 use Irfan\Phplearning\model\User;
 use Irfan\Phplearning\model\UserRepo;
+use Irfan\Phplearning\utilities\SecurityUtility;
+use Irfan\Phplearning\utilities\SessionManagerContract;
 use Irfan\Phplearning\view\RegistrationPresenter;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -13,18 +15,16 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-class RegistrationController
+class RegistrationController extends BaseController
 {
     public function __construct(
-       private readonly RegistrationPresenter   $registrationView,
-        private readonly Environment            $twig,
-        private readonly EntityManagerInterface $entityManager,
-
+        private readonly RegistrationPresenter  $registrationView,
+        private readonly UserRepo       $userRepo,
+        private readonly SessionManagerContract $sessionManager,
+        private readonly SecurityUtility  $securityUtility
     )
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        parent::__construct($this->sessionManager);
     }
 
     /**
@@ -34,26 +34,18 @@ class RegistrationController
      */
     public function render(): void
     {
-        $token = bin2hex(random_bytes(32));
-        $_SESSION["csrf_token"] = $token;
+        $token = $this->securityUtility->createCsrfToken();
         $this->registrationView->render($token);
-/*        $this->twig->display("registration.twig", ["token" => $token]);*/
     }
 
-    public function register(array $formData): void
+    public function register(array $userInfo): void
     {
-        if ($formData["token"] == $_SESSION["csrf_token"]) {
-            $firstName = htmlspecialchars($formData["first_name"] ?? '');
-            $lastName = htmlspecialchars($formData["lastName_name"] ?? '');
-            $email = htmlspecialchars($formData["email"] ?? '');
-            $password = htmlspecialchars($formData["password"] ?? '');
-            $user = new User();
-            $user->setFirstName($firstName);
-            $user->setLastName($lastName);
-            $user->setEmail($email);
-            $user->setPassword($password);
-            $repo = UserRepo::instantiate($this->entityManager);
-            $isSuccess = $repo->saveUser($user);
+        $receivedCrsfToken = $userInfo["token"]??'';
+        $isCsrfTokenValid = $this->securityUtility->checkTokenValidity($receivedCrsfToken);
+
+        if ($isCsrfTokenValid) {
+
+            $isSuccess = $this->userRepo->saveUser($userInfo);
             if ($isSuccess) {
                 header('Location: /login');
                 exit();

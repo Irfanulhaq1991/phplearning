@@ -26,12 +26,11 @@ class DashboardController extends BaseController
     public function start(): void
     {
         $userId = $this->sessionManager->getValue(AppSessionKeys::USER_ID_KEY);
-        echo "$userId";
-        $user = $this->userRepo->findUserById($userId);
-        $data = [
-            "user" => $user
-        ];
-        $this->presenter->displayLayout($data);
+        $user = [$this->userRepo->findUserById($userId)];
+//        $data = [
+//            "user" => $user
+//        ];
+        $this->presenter->displayLayout($user);
     }
 
     public function logoutUser(): void

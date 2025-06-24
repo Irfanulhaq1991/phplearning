@@ -14,7 +14,7 @@ use JetBrains\PhpStorm\Deprecated;
 use function DI\string;
 
 #[Entity(repositoryClass: UserRepo::class)]
-#[Table(name: "User")]
+#[Table(name: "_User")]
 class User
 {
     #[Column(type: "integer")]

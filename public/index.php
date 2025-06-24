@@ -7,7 +7,7 @@ use Irfan\Phplearning\App;
 $app = require_once __DIR__ . '/../src/config/di-config.php';
 
 if ($app instanceof App) {
-    $app->init();
+    $app->start();
 } else {
     echo "Failed to initialize the application.";
 }

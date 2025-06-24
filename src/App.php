@@ -10,7 +10,7 @@ readonly class App
     public function __construct(private RouterContract $router)
     {}
 
-    public function init(): void
+    public function start(): void
     {
         $this->router->registerRouts();
     }

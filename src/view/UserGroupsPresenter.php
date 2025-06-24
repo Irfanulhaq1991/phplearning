@@ -12,4 +12,8 @@ class UserGroupsPresenter extends BasePresenter
     }
 
 
+    function displayLayout(array $data = []): void
+    {
+        $this->render('user_groups',$data);
+    }
 }

@@ -27,7 +27,7 @@ readonly class FlightRouter implements RouterContract
 
         Flight::route('POST /submit-registration', function () {
             $formData = Flight::request()->data->getData();
-           $this->registrationController->register($formData);
+            $this->registrationController->register($formData);
         });
 
         Flight::route('/login', function () {
@@ -45,6 +45,9 @@ readonly class FlightRouter implements RouterContract
 
         Flight::route('/user-groups', function () {
             $this->userGroupsController->start();
+        });
+        Flight::route('/join-group', function () {
+            $this->joinGroupController->start();
         });
         Flight::start();
     }

@@ -2,18 +2,17 @@
 
 
 use DI\ContainerBuilder;
-use DI\DependencyException;
-use DI\NotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Irfan\Phplearning\App;
 use Irfan\Phplearning\controller\LoginController;
 use Irfan\Phplearning\controller\RegistrationController;
 use Irfan\Phplearning\controller\UserGroupsController;
+use Irfan\Phplearning\model\Group;
+use Irfan\Phplearning\model\GroupRep;
 use Irfan\Phplearning\model\User;
 use Irfan\Phplearning\model\UserRepo;
 use Irfan\Phplearning\routing\FlightRouter;
 use Irfan\Phplearning\routing\RouterContract;
-use Irfan\Phplearning\routing\RouterManager;
 use Irfan\Phplearning\utilities\SecurityUtility;
 use Irfan\Phplearning\utilities\SessionManager;
 use Irfan\Phplearning\utilities\SessionManagerContract;
@@ -36,6 +35,10 @@ $diGrape = [
     UserRepo::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManagerInterface::class);
         return $em->getRepository(User::class);
+    },
+    GroupRep::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManagerInterface::class);
+        return $em->getRepository(Group::class);
     },
     //app
     App::class => autowire(),

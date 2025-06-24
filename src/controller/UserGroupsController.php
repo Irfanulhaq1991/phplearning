@@ -21,7 +21,7 @@ class UserGroupsController extends BaseController
 
     public function start(): void
     {
-        $this->presenter->render('groups.twig');
+        $this->presenter->displayLayout();
     }
 
     public function logoutUser()

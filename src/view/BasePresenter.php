@@ -10,6 +10,7 @@ use Twig\Error\SyntaxError;
 abstract class BasePresenter
 {
 
+    abstract function displayLayout(array $data = []):void;
 
     public function __construct(private readonly Environment $twig)
     {}
@@ -19,8 +20,8 @@ abstract class BasePresenter
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function render(string $template,array $data = []): void
+    protected function render(string $template, array $data): void
     {
-        $this->twig->display($template,$data);
+        $this->twig->display($template.'.twig', $data);
     }
 }

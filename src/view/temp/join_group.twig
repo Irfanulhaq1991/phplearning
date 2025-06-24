@@ -1,13 +1,9 @@
 {% extends "base_template.twig" %}
-
 {% block content %}
-
-    <h3>User Groups</h3>
-    <a href="#">Join group</a>
     <div>
         <ul>
             {% for group in groups %}
-                <li>{{ group.name }}<=#|#=>> {{ group.joined_date }} <=#|#=>> <a href="#">Edit</a> <=#|#=>> <a href="#">Delete</a>
+                <li>{{ group.name }}<=#|#=>> {{ group.joined_date }} <=#|#=>> <a href="/join/{{ group.Id }}">Join</a>
                 </li>
             {% else %}
                 <li><em>no user found</em></li>

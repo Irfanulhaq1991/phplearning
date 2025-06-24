@@ -4,6 +4,7 @@
 use DI\ContainerBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Irfan\Phplearning\App;
+use Irfan\Phplearning\controller\JoinGroupController;
 use Irfan\Phplearning\controller\LoginController;
 use Irfan\Phplearning\controller\RegistrationController;
 use Irfan\Phplearning\controller\UserGroupsController;
@@ -16,6 +17,7 @@ use Irfan\Phplearning\routing\RouterContract;
 use Irfan\Phplearning\utilities\SecurityUtility;
 use Irfan\Phplearning\utilities\SessionManager;
 use Irfan\Phplearning\utilities\SessionManagerContract;
+use Irfan\Phplearning\view\JoinGroupPresenter;
 use Irfan\Phplearning\view\LoginPresenter;
 use Irfan\Phplearning\view\RegistrationPresenter;
 use Irfan\Phplearning\view\UserGroupsPresenter;
@@ -51,10 +53,12 @@ $diGrape = [
     LoginController::class => autowire(),
     RegistrationController::class => autowire(),
     UserGroupsController::class=>autowire(),
+    JoinGroupController::class=>autowire(),
     // presenter
     LoginPresenter::class => autowire(),
     RegistrationPresenter::class => autowire(),
     UserGroupsPresenter::class => autowire(),
+    JoinGroupPresenter::class=>autowire(),
     //router
     RouterContract::class => autowire(FlightRouter::class),
     // Utilities

@@ -3,6 +3,7 @@
 namespace Irfan\Phplearning\routing;
 
 use Flight;
+use Irfan\Phplearning\controller\JoinGroupController;
 use Irfan\Phplearning\controller\LoginController;
 use Irfan\Phplearning\controller\RegistrationController;
 use Irfan\Phplearning\controller\UserGroupsController;
@@ -14,6 +15,7 @@ readonly class FlightRouter implements RouterContract
         private RegistrationController $registrationController,
         private LoginController        $loginController,
         private UserGroupsController   $userGroupsController,
+        private JoinGroupController    $joinGroupController
     )
     {
     }

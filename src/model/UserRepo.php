@@ -33,10 +33,8 @@ class UserRepo extends EntityRepository
     public function addUserGroup(User $user, Group $group)
     {
         $userGroups = $user->getGroups();
-        $groupUsers = $group->getUsers();
-        if (!$userGroups->contains($group) && !$groupUsers->contains($user)) {
+        if (!$userGroups->contains($group)) {
             $userGroups->add($group);
-            $groupUsers->add($user);
         }
 
         $this->getEntityManager()->flush();
@@ -46,14 +44,12 @@ class UserRepo extends EntityRepository
     {
         $userGroups = $user->getGroups();
         $groupUsers = $group->getUsers();
-        if ($userGroups->contains($group) && $groupUsers->contains($user)) {
+        if ($userGroups->contains($group)) {
             $userGroups->removeElement($group);
-            $groupUsers->removeElement($user);
         }
 
         $this->getEntityManager()->flush();
         $userGroups = $user->getGroups();
-        $groupUsers = $group->getUsers();
-        return !($userGroups->contains($group) || $groupUsers->contains($user));
+        return !($userGroups->contains($group));
     }
 }

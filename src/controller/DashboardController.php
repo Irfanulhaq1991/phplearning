@@ -27,9 +27,6 @@ class DashboardController extends BaseController
     {
         $userId = $this->sessionManager->getValue(AppSessionKeys::USER_ID_KEY);
         $user = [$this->userRepo->findUserById($userId)];
-//        $data = [
-//            "user" => $user
-//        ];
         $this->presenter->displayLayout($user);
     }
 

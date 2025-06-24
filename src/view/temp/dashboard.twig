@@ -2,12 +2,12 @@
 
 {% block content %}
 
-    <h3>User Groups</h3>
+    <h3>Dashboard</h3>
     <a href="/join-group">Join group</a>
     <div>
         <ul>
             {% for group in groups %}
-                <li>{{ group.name }}<=#|#=>> {{ group.joined_date }} <=#|#=>> <a href="#">Edit</a> <=#|#=>> <a href="#">Delete</a>
+                <li>{{ group.name }}<=#|#=>> <a href="#">Delete</a>
                 </li>
             {% else %}
                 <li><em>no user found</em></li>

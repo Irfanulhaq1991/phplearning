@@ -7,7 +7,7 @@ use Irfan\Phplearning\App;
 use Irfan\Phplearning\controller\JoinGroupController;
 use Irfan\Phplearning\controller\LoginController;
 use Irfan\Phplearning\controller\RegistrationController;
-use Irfan\Phplearning\controller\UserGroupsController;
+use Irfan\Phplearning\controller\DashboardController;
 use Irfan\Phplearning\model\Group;
 use Irfan\Phplearning\model\GroupRep;
 use Irfan\Phplearning\model\User;
@@ -20,7 +20,7 @@ use Irfan\Phplearning\utilities\SessionManagerContract;
 use Irfan\Phplearning\view\JoinGroupPresenter;
 use Irfan\Phplearning\view\LoginPresenter;
 use Irfan\Phplearning\view\RegistrationPresenter;
-use Irfan\Phplearning\view\UserGroupsPresenter;
+use Irfan\Phplearning\view\DashboardPresenter;
 use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -52,12 +52,12 @@ $diGrape = [
     // controller
     LoginController::class => autowire(),
     RegistrationController::class => autowire(),
-    UserGroupsController::class=>autowire(),
+    DashboardController::class=>autowire(),
     JoinGroupController::class=>autowire(),
     // presenter
     LoginPresenter::class => autowire(),
     RegistrationPresenter::class => autowire(),
-    UserGroupsPresenter::class => autowire(),
+    DashboardPresenter::class => autowire(),
     JoinGroupPresenter::class=>autowire(),
     //router
     RouterContract::class => autowire(FlightRouter::class),

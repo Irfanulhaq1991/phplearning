@@ -6,7 +6,7 @@ use Flight;
 use Irfan\Phplearning\controller\JoinGroupController;
 use Irfan\Phplearning\controller\LoginController;
 use Irfan\Phplearning\controller\RegistrationController;
-use Irfan\Phplearning\controller\UserGroupsController;
+use Irfan\Phplearning\controller\DashboardController;
 
 readonly class FlightRouter implements RouterContract
 {
@@ -14,7 +14,7 @@ readonly class FlightRouter implements RouterContract
     public function __construct(
         private RegistrationController $registrationController,
         private LoginController        $loginController,
-        private UserGroupsController   $userGroupsController,
+        private DashboardController    $userGroupsController,
         private JoinGroupController    $joinGroupController
     )
     {

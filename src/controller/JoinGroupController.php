@@ -9,7 +9,7 @@ use Irfan\Phplearning\utilities\SecurityUtility;
 use Irfan\Phplearning\utilities\SessionManagerContract;
 use Irfan\Phplearning\view\JoinGroupPresenter;
 use Irfan\Phplearning\view\LoginPresenter;
-use Irfan\Phplearning\view\UserGroupsPresenter;
+use Irfan\Phplearning\view\DashboardPresenter;
 
 class JoinGroupController extends BaseController
 {

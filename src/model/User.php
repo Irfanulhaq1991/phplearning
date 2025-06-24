@@ -3,15 +3,15 @@
 namespace Irfan\Phplearning\model;
 
 
-use Doctrine\DBAL\Types\IntegerType;
-use Doctrine\DBAL\Types\StringType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\Table;
-use JetBrains\PhpStorm\Deprecated;
-use function DI\string;
 
 #[Entity(repositoryClass: UserRepo::class)]
 #[Table(name: "_User")]
@@ -31,6 +31,14 @@ class User
     #[Column(type: "string")]
     private string $password;
 
+    #[ManyToMany(targetEntity: Group::class, inversedBy: 'users',)]
+    #[JoinTable(name: 'users_groups')]
+    private Collection $groups;
+
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
 
 
     public function getId(): int
@@ -82,8 +90,15 @@ class User
         $this->password = password_hash($password,PASSWORD_BCRYPT);
     }
 
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
 
-
+    public function setGroups(Collection $groups): void
+    {
+        $this->groups = $groups;
+    }
 
 
 }

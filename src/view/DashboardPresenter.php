@@ -4,9 +4,11 @@ namespace Irfan\Phplearning\view;
 
 use Twig\Environment;
 
-class UserGroupsPresenter extends BasePresenter
+class DashboardPresenter extends BasePresenter
 {
-    public function __construct(private readonly Environment $twig)
+    public function __construct(
+        private readonly Environment $twig
+    )
     {
         parent::__construct($this->twig);
     }
@@ -14,6 +16,6 @@ class UserGroupsPresenter extends BasePresenter
 
     function displayLayout(array $data = []): void
     {
-        $this->render('user_groups',$data);
+        $this->render('dashboard',$data);
     }
 }

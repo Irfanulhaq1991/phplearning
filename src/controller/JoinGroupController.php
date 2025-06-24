@@ -3,6 +3,7 @@
 namespace Irfan\Phplearning\controller;
 
 
+use Irfan\Phplearning\model\GroupRep;
 use Irfan\Phplearning\model\UserRepo;
 use Irfan\Phplearning\utilities\SecurityUtility;
 use Irfan\Phplearning\utilities\SessionManagerContract;
@@ -15,6 +16,7 @@ class JoinGroupController extends BaseController
     public function __construct(
         private readonly JoinGroupPresenter $presenter,
         private readonly SessionManagerContract $sessionManager,
+        private readonly GroupRep $groupRep
     )
     {
         parent::__construct($this->sessionManager);
@@ -22,6 +24,8 @@ class JoinGroupController extends BaseController
 
     public function start(): void
     {
-        $this->presenter->displayLayout();
+        $groups = $this->groupRep->findAll();
+        $receivedData = ["groups"=>$groups];
+        $this->presenter->displayLayout($receivedData);
     }
 }

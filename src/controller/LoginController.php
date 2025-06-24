@@ -9,20 +9,19 @@ use Irfan\Phplearning\utilities\SessionManagerContract;
 use Irfan\Phplearning\view\LoginPresenter;
 
 
-
 class LoginController extends BaseController
 {
     public function __construct(
-        private readonly LoginPresenter $loginPresenter,
-        private readonly UserRepo       $userRepo,
+        private readonly LoginPresenter         $loginPresenter,
+        private readonly UserRepo               $userRepo,
         private readonly SessionManagerContract $sessionManager,
-        private readonly SecurityUtility $securityUtility
+        private readonly SecurityUtility        $securityUtility
     )
     {
         parent::__construct($this->sessionManager);
     }
 
-    public function render(): void
+    public function start(): void
     {
         $token = $this->securityUtility->createCsrfToken();
         $this->loginPresenter->render($token);
@@ -34,15 +33,16 @@ class LoginController extends BaseController
      */
     public function login(array $formData): void
     {
-        $receivedCrsfToken = $formData["token"]??'';
-        $email = $formData["email"]?? '';
-        $password = $formData["password"]??'';
+        $receivedCrsfToken = $formData["token"] ?? '';
+        $email = $formData["email"] ?? '';
+        $password = $formData["password"] ?? '';
         $isCsrfTokenValid = $this->securityUtility->checkTokenValidity($receivedCrsfToken);
-        if($isCsrfTokenValid) {
+        if ($isCsrfTokenValid) {
             $user = $this->userRepo->getUserByEmail($email);
-            if($user && $user->comparePassword($password)){
-                echo "Login is successful";
-            }else{
+            if ($user && $user->comparePassword($password)) {
+                header('Location:/user-groups');
+                exit();
+            } else {
                 echo "Login is unsuccessful";
             }
         }
@@ -53,4 +53,5 @@ class LoginController extends BaseController
     {
 
     }
+
 }

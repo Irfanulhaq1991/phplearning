@@ -19,9 +19,9 @@ class UserGroupsController extends BaseController
         parent::__construct($this->sessionManager);
     }
 
-    public function render(): void
+    public function start(): void
     {
-        $this->presenter->render();
+        $this->presenter->render('groups.twig');
     }
 
     public function logoutUser()

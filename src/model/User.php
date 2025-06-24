@@ -31,6 +31,8 @@ class User
     #[Column(type: "string")]
     private string $password;
 
+
+
     public function getId(): int
     {
         return $this->id;

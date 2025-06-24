@@ -32,7 +32,7 @@ class RegistrationController extends BaseController
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function render(): void
+    public function start(): void
     {
         $token = $this->securityUtility->createCsrfToken();
         $this->registrationView->render($token);
@@ -46,7 +46,7 @@ class RegistrationController extends BaseController
         if ($isCsrfTokenValid) {
 
             $firstName = $userInfo["first_name"];
-            $lastName = $userInfo["lastName_name"];
+            $lastName = $userInfo["last_name"];
             $email = $userInfo["email"];
             $password = $userInfo["password"];
 

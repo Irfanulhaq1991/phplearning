@@ -60,6 +60,9 @@ readonly class FlightRouter implements RouterContract
             $this->joinGroupController->joinGroup($groupId);
         });
 
+        Flight::route('/delete/@groupId', function ($groupId) {
+            $this->dashboardController->deleteUserGroup($groupId);
+        });
 
         Flight::start();
     }

@@ -11,7 +11,7 @@
     <div>
         <ul>
             {% for group in user.groups %}
-                <li>{{ group.name }}<=#|#=>> <a href="#">Delete</a>
+                <li>{{ group.name }}<  =#|#=  >  <a href="/delete/{{ group.id }}">Delete</a>
                 </li>
             {% else %}
                 <li><em>no user found</em></li>

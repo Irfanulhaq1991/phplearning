@@ -3,6 +3,7 @@
 namespace Irfan\Phplearning\controller;
 
 
+use Irfan\Phplearning\model\GroupRep;
 use Irfan\Phplearning\model\UserRepo;
 use Irfan\Phplearning\utilities\AppSessionKeys;
 use Irfan\Phplearning\utilities\SecurityUtility;
@@ -15,6 +16,7 @@ class DashboardController extends BaseController
     public function __construct(
         private readonly DashboardPresenter     $presenter,
         private readonly UserRepo               $userRepo,
+        private readonly GroupRep               $groupRepo,
         private readonly SessionManagerContract $sessionManager,
     )
     {
@@ -24,6 +26,7 @@ class DashboardController extends BaseController
     public function start(): void
     {
         $userId = $this->sessionManager->getValue(AppSessionKeys::USER_ID_KEY);
+        echo "$userId";
         $user = $this->userRepo->findUserById($userId);
         $data = [
             "user" => $user
@@ -36,5 +39,17 @@ class DashboardController extends BaseController
         $this->sessionManager->clear();
         header('Location:/');
         exit();
+    }
+
+    public function deleteUserGroup(int $groupId): void
+    {
+        $userId = $this->sessionManager->getValue(AppSessionKeys::USER_ID_KEY);
+        $group = $this->groupRepo->findGroupById($groupId);
+        $user = $this->userRepo->findUserById($userId);
+        $isDeleted = $this->userRepo->deleteUserGroupById($user, $group);
+        if ($isDeleted) {
+            header('Location:/dashboard');
+            exit();
+        }
     }
 }

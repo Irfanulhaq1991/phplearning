@@ -42,8 +42,18 @@ class UserRepo extends EntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function getUserGroups(string $Id):Collection
+    public function deleteUserGroupById(User $user,Group $group):bool
     {
+        $userGroups = $user->getGroups();
+        $groupUsers = $group->getUsers();
+        if ($userGroups->contains($group) && $groupUsers->contains($user)) {
+            $userGroups->removeElement($group);
+            $groupUsers->removeElement($user);
+        }
 
+        $this->getEntityManager()->flush();
+        $userGroups = $user->getGroups();
+        $groupUsers = $group->getUsers();
+        return !($userGroups->contains($group) || $groupUsers->contains($user));
     }
 }

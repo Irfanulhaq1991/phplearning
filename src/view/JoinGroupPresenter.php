@@ -14,6 +14,7 @@ class JoinGroupPresenter extends BasePresenter
 
     function displayLayout(array $data = []): void
     {
-        $this->render('join_group',$data);
+        $receivedData = ["groups"=>$data];
+        $this->render('join_group',$receivedData);
     }
 }

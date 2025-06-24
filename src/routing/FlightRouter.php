@@ -14,7 +14,7 @@ readonly class FlightRouter implements RouterContract
     public function __construct(
         private RegistrationController $registrationController,
         private LoginController        $loginController,
-        private DashboardController    $userGroupsController,
+        private DashboardController    $dashboardController,
         private JoinGroupController    $joinGroupController
     )
     {
@@ -45,12 +45,22 @@ readonly class FlightRouter implements RouterContract
             $this->registrationController->start();
         });
 
-        Flight::route('/user-groups', function () {
-            $this->userGroupsController->start();
+        Flight::route('/dashboard', function () {
+            $this->dashboardController->start();
         });
         Flight::route('/join-group', function () {
             $this->joinGroupController->start();
         });
+
+        Flight::route('/logout', function () {
+            $this->dashboardController->logoutUser();
+        });
+
+        Flight::route('/join/@groupId', function ($groupId) {
+            $this->joinGroupController->joinGroup($groupId);
+        });
+
+
         Flight::start();
     }
 }

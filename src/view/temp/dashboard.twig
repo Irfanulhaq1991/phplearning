@@ -3,10 +3,14 @@
 {% block content %}
 
     <h3>Dashboard</h3>
-    <a href="/join-group">Join group</a>
+    <dive>
+        <h4>{{ user.firstName }}</h4>
+        <a href="/join-group">Join group</a>
+        <a href="/logout">logout</a>
+    </dive>
     <div>
         <ul>
-            {% for group in groups %}
+            {% for group in user.groups %}
                 <li>{{ group.name }}<=#|#=>> <a href="#">Delete</a>
                 </li>
             {% else %}

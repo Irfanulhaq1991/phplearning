@@ -17,10 +17,16 @@ class UserRepo extends EntityRepository
         return $user->getId() !== null && $user->getId() > 0;
     }
 
-    public function getUserByEmail(string $email): ?User
+    public function findUserByEmail(string $email): ?User
     {
         return $this->findOneBy([
             "email" => $email
+        ]);
+    }
+    public function findUserById(string $id): ?User
+    {
+        return $this->findOneBy([
+            "id" => $id
         ]);
     }
 

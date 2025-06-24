@@ -4,6 +4,7 @@ namespace Irfan\Phplearning\controller;
 
 
 use Irfan\Phplearning\model\UserRepo;
+use Irfan\Phplearning\utilities\AppSessionKeys;
 use Irfan\Phplearning\utilities\SecurityUtility;
 use Irfan\Phplearning\utilities\SessionManagerContract;
 use Irfan\Phplearning\view\LoginPresenter;
@@ -38,19 +39,15 @@ class LoginController extends BaseController
         $password = $formData["password"] ?? '';
         $isCsrfTokenValid = $this->securityUtility->checkTokenValidity($receivedCrsfToken);
         if ($isCsrfTokenValid) {
-            $user = $this->userRepo->getUserByEmail($email);
+            $user = $this->userRepo->findUserByEmail($email);
             if ($user && $user->comparePassword($password)) {
-                header('Location:/user-groups');
+                $this->sessionManager->saveValue(AppSessionKeys::USER_ID_KEY,$user->getId());
+                header('Location:/dashboard');
                 exit();
             } else {
                 echo "Login is unsuccessful";
             }
         }
-
-    }
-
-    public function logout()
-    {
 
     }
 
